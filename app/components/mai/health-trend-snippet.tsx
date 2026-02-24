@@ -119,13 +119,39 @@ function CircularProgress({
   )
 }
 
-export function HealthTrendSnippet() {
+export function HealthTrendSnippet({ analysisData }: { analysisData?: any }) {
+  // convert API organ_scores into same shape as the static list;
+  // use preset colors/icons for known names, otherwise default.
+  const colorMap: Record<string, { color: string; trackColor: string }> = {
+    Heart: { color: "#e74c3c", trackColor: "#fbc4b2" },
+    Lungs: { color: "#bdc3c7", trackColor: "#e7e7e7" },
+    Liver: { color: "#27ae60", trackColor: "#acd8a7" },
+    Spleen: { color: "#f4d03f", trackColor: "#fed39c" },
+    "Left kidney": { color: "#3498db", trackColor: "#b3daff" },
+    "Right kidney": { color: "#3f48cc", trackColor: "#d5d7f8" },
+  }
+
+  const dynamicOrgans: OrganScore[] = analysisData?.organ_scores
+    ? Object.entries(analysisData.organ_scores).map(([name, score]) => {
+        const colors = colorMap[name as string] || { color: "#46913c", trackColor: "#acd8a7" };
+        return {
+          name,
+          score: score as number,
+          color: colors.color,
+          trackColor: colors.trackColor,
+          icon: <span className="text-xs">{name[0]}</span>,
+        }
+      })
+    : []
+
+  const list = dynamicOrgans.length ? dynamicOrgans : organs
+
   return (
     <div>
       <h3 className="text-base font-semibold text-[#111827]">Health Trend Snippet</h3>
 
       <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-3">
-        {organs.map((organ) => (
+        {list.map((organ) => (
           <div
             key={organ.name}
             className="flex flex-col items-center rounded-2xl bg-[#ffffff] p-4 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"

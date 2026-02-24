@@ -5,6 +5,7 @@ import { ArrowLeft, Shield } from "lucide-react"
 import { AdminStats } from "@/components/admin/admin-stats"
 import { UsersTable } from "@/components/admin/users-table"
 import { RecentActivity } from "@/components/admin/recent-activity"
+import { UploadZone } from "@/components/upload/upload-zone"
 
 function YinYangIcon({ size = 24 }: { size?: number }) {
   return (
@@ -57,6 +58,11 @@ export default function AdminPage() {
 
         {/* Stats row */}
         <AdminStats />
+
+        {/* quick waveform upload (drag/drop) */}
+        <div className="mt-8">
+          <UploadZone />
+        </div>
 
         {/* Users + Activity */}
         <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_360px]">

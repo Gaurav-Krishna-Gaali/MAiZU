@@ -3,10 +3,38 @@
 import { CheckCircle2, Loader2, Upload } from "lucide-react"
 import { useCallback, useState } from "react"
 import { cn } from "@/lib/utils"
+import { sendWaveform } from "@/lib/api"
 
-export function UploadZone() {
+interface UploadZoneProps {
+  onResult?: (data: any) => void;
+  showRaw?: boolean;
+}
+
+export function UploadZone({ onResult, showRaw = false }: UploadZoneProps) {
   const [state, setState] = useState<"idle" | "dragging" | "uploading" | "success">("idle")
   const [fileName, setFileName] = useState("")
+  const [response, setResponse] = useState<string | null>(null)
+  const [parsedData, setParsedData] = useState<any>(null)
+
+  const normalizeApiResponse = (resp: any) => {
+    if (!resp) return resp
+
+    // Handle Anthropic-style response where the real JSON is nested
+    // inside content[0].text as a string.
+    const content0 = resp.content?.[0]
+    const text = typeof content0?.text === "string" ? content0.text : null
+
+    if (text) {
+      try {
+        const inner = JSON.parse(text)
+        return inner
+      } catch (e) {
+        console.warn("Failed to parse nested analysis JSON", e)
+      }
+    }
+
+    return resp
+  }
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -20,21 +48,44 @@ export function UploadZone() {
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
-    if (file) simulateUpload(file.name)
+    if (file) processFile(file)
   }, [])
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) simulateUpload(file.name)
+    if (file) processFile(file)
   }, [])
 
-  const simulateUpload = (name: string) => {
-    setFileName(name)
+  const processFile = (file: File) => {
+    setFileName(file.name)
     setState("uploading")
-    setTimeout(() => {
-      setState("success")
-      setTimeout(() => setState("idle"), 3000)
-    }, 2500)
+    setResponse(null)
+
+    const reader = new FileReader()
+    reader.onload = async () => {
+      try {
+        const text = reader.result as string
+        const json = JSON.parse(text)
+        const resp = await sendWaveform(json)
+        const normalized = normalizeApiResponse(resp)
+        setResponse(JSON.stringify(normalized, null, 2))
+        setParsedData(normalized)
+        if (onResult) onResult(normalized)
+        setState("success")
+        setTimeout(() => setState("idle"), 3000)
+      } catch (err) {
+        console.error(err)
+        setResponse(String(err))
+        setState("idle")
+        alert("Failed to upload payload: " + err)
+      }
+    }
+    reader.onerror = () => {
+      console.error(reader.error)
+      setState("idle")
+      alert("Unable to read file")
+    }
+    reader.readAsText(file)
   }
 
   return (
@@ -97,6 +148,11 @@ export function UploadZone() {
           </>
         )}
       </div>
+      {showRaw && response && (
+        <pre className="mt-4 max-h-40 overflow-auto rounded bg-[#F5F5F5] p-2 text-xs">
+          {response}
+        </pre>
+      )}
     </div>
   )
 }

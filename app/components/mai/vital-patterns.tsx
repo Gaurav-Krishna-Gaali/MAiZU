@@ -155,16 +155,36 @@ function RestCard() {
   )
 }
 
-export function VitalPatterns() {
+export function VitalPatterns({ analysisData }: { analysisData?: any }) {
+  const perPos = analysisData?.per_position_analysis
+
   return (
     <div>
       <h3 className="text-base font-semibold text-[#111827]">Vital Patterns</h3>
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <MovementCard />
-        <StressCard />
-        <BreathCard />
-        <RestCard />
-      </div>
+      {perPos ? (
+        <div className="mt-4 grid grid-cols-1 gap-3">
+          {Object.entries(perPos).map(([pos, info]: any) => (
+            <div
+              key={pos}
+              className="flex flex-col rounded-2xl border border-[#e1e3e8] bg-[#ffffff] p-4"
+            >
+              <span className="text-sm font-semibold text-[#276220]">
+                {pos.replace(/_/g, ' ')}
+              </span>
+              <span className="mt-1 text-xs text-[#676767]">
+                {info.dominant_quality} ({info.category})
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <MovementCard />
+          <StressCard />
+          <BreathCard />
+          <RestCard />
+        </div>
+      )}
     </div>
   )
 }

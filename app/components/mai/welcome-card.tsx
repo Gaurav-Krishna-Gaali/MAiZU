@@ -3,10 +3,19 @@
 import { X } from "lucide-react"
 import { useState } from "react"
 
-export function WelcomeCard() {
+interface WelcomeCardProps {
+  username: string
+  advice: string
+  score: number // 0‑1 or percent depending on API
+}
+
+export function WelcomeCard({ username, advice, score }: WelcomeCardProps) {
   const [visible, setVisible] = useState(true)
 
   if (!visible) return null
+
+  // calculate percentage for SVG if score is 0‑1
+  const pct = Math.round((score > 1 ? score : score * 100))
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-[#276220] p-5 text-[#ffffff] shadow-[0_2px_8px_rgba(39,98,32,0.3)]">
@@ -21,10 +30,10 @@ export function WelcomeCard() {
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1">
           <h2 className="text-lg font-semibold leading-tight lg:text-xl">
-            Welcome Katie,
+            {username ? `Welcome ${username},` : "Welcome,"}
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-[#ffffff]/80">
-            {"Today's pulses call for qigong and yin foods."}
+            {advice || ""}
           </p>
           <button className="mt-3 rounded-full bg-[#46913c] px-4 py-1.5 text-xs font-medium text-[#ffffff] transition-colors hover:bg-[#6fcf97]">
             learn more
@@ -49,7 +58,7 @@ export function WelcomeCard() {
               fill="none"
               stroke="#95ff87"
               strokeWidth="5"
-              strokeDasharray={`${0.7 * 2 * Math.PI * 40} ${2 * Math.PI * 40}`}
+              strokeDasharray={`${(pct / 100) * 2 * Math.PI * 40} ${2 * Math.PI * 40}`}
               strokeLinecap="round"
               transform="rotate(-90 48 48)"
             />
@@ -65,7 +74,7 @@ export function WelcomeCard() {
               fontSize="26"
               fontWeight="700"
             >
-              70%
+              {pct}%
             </text>
           </svg>
         </div>

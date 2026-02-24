@@ -4,45 +4,69 @@ import { useState } from "react"
 
 const tabs = ["Focus", "Enlighten", "Thrive"]
 
-const tabContent: Record<string, { text: string; iconBg: string; iconSvg: React.ReactNode }> = {
-  Focus: {
-    text: "You may be experiencing Liver Yang Rising (frustration) lately. We recommend holding acupressure point LIV-3 for 2 minutes",
-    iconBg: "#fbc4b2",
-    iconSvg: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M14 4 L14 12 M10 8 L18 8 M8 16 C8 20 11 24 14 24 C17 24 20 20 20 16" stroke="#276220" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="10" cy="18" r="1.5" fill="#276220" />
-        <circle cx="18" cy="18" r="1.5" fill="#276220" />
-      </svg>
-    ),
-  },
-  Enlighten: {
-    text: "Your Spleen Qi could benefit from warm, cooked foods. Try ginger tea with honey in the mornings to support digestion.",
-    iconBg: "#fed39c",
-    iconSvg: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M8 18 C8 12 14 8 20 10 C20 16 14 20 8 18Z" fill="#acd8a7" stroke="#276220" strokeWidth="1" />
-        <path d="M14 10 L14 20" stroke="#276220" strokeWidth="1" />
-        <path d="M14 14 L10 16" stroke="#276220" strokeWidth="1" />
-      </svg>
-    ),
-  },
-  Thrive: {
-    text: "Your Heart meridian shows strong vitality. Continue your evening meditation practice to maintain emotional balance.",
-    iconBg: "#d5d7f8",
-    iconSvg: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="8" stroke="#276220" strokeWidth="1.2" />
-        <path d="M14 8 L14 14 L18 16" stroke="#276220" strokeWidth="1.2" strokeLinecap="round" />
-        <circle cx="14" cy="14" r="1.5" fill="#276220" />
-      </svg>
-    ),
-  },
-}
+export function DailyDao({ analysisData }: { analysisData?: any }) {
+  const [activeTab, setActiveTab] = useState<typeof tabs[number]>("Focus")
 
-export function DailyDao() {
-  const [activeTab, setActiveTab] = useState("Focus")
-  const content = tabContent[activeTab]
+  const defaultContent: Record<string, { text: string; iconBg: string; iconSvg: React.ReactNode }> = {
+    Focus: {
+      text: "You may be experiencing Liver Yang Rising (frustration) lately. We recommend holding acupressure point LIV-3 for 2 minutes",
+      iconBg: "#fbc4b2",
+      iconSvg: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 4 L14 12 M10 8 L18 8 M8 16 C8 20 11 24 14 24 C17 24 20 20 20 16" stroke="#276220" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="10" cy="18" r="1.5" fill="#276220" />
+          <circle cx="18" cy="18" r="1.5" fill="#276220" />
+        </svg>
+      ),
+    },
+    Enlighten: {
+      text: "Your Spleen Qi could benefit from warm, cooked foods. Try ginger tea with honey in the mornings to support digestion.",
+      iconBg: "#fed39c",
+      iconSvg: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M8 18 C8 12 14 8 20 10 C20 16 14 20 8 18Z" fill="#acd8a7" stroke="#276220" strokeWidth="1" />
+          <path d="M14 10 L14 20" stroke="#276220" strokeWidth="1" />
+          <path d="M14 14 L10 16" stroke="#276220" strokeWidth="1" />
+        </svg>
+      ),
+    },
+    Thrive: {
+      text: "Your Heart meridian shows strong vitality. Continue your evening meditation practice to maintain emotional balance.",
+      iconBg: "#d5d7f8",
+      iconSvg: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="8" stroke="#276220" strokeWidth="1.2" />
+          <path d="M14 8 L14 14 L18 16" stroke="#276220" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="14" cy="14" r="1.5" fill="#276220" />
+        </svg>
+      ),
+    },
+  }
+
+  const tabContent = analysisData
+    ? {
+        Focus: {
+          text: analysisData.diagnosis?.primary?.pattern
+            ? `Pattern: ${analysisData.diagnosis.primary.pattern}`
+            : defaultContent.Focus.text,
+          iconBg: defaultContent.Focus.iconBg,
+          iconSvg: defaultContent.Focus.iconSvg,
+        },
+        Enlighten: {
+          text: analysisData.recommendations?.lifestyle || defaultContent.Enlighten.text,
+          iconBg: defaultContent.Enlighten.iconBg,
+          iconSvg: defaultContent.Enlighten.iconSvg,
+        },
+        Thrive: {
+          text:
+            analysisData.recommendations?.follow_up || defaultContent.Thrive.text,
+          iconBg: defaultContent.Thrive.iconBg,
+          iconSvg: defaultContent.Thrive.iconSvg,
+        },
+      }
+    : defaultContent
+
+  const content = tabContent[activeTab as keyof typeof tabContent]
 
   return (
     <div className="rounded-2xl bg-[#ffffff] p-5 shadow-[0_1px_4px_rgba(0,0,0,0.06)]">

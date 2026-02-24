@@ -1,0 +1,234 @@
+{
+  "session_id": "maizu_1771960553799_6bmv",
+  "timestamp": "2026-02-24T19:15:53.799Z",
+  "device": "maizu_wristband_v1_synthetic",
+  "context": {
+    "state": "resting",
+    "position": "seated",
+    "rest_duration_min": 5,
+    "age_group": "10-35",
+    "baseline_used": "resting_adult_10_35"
+  },
+  "sample_rate_hz": 250,
+  "duration_sec": 10,
+  "channels": {
+    "left_cun": {
+      "position": "cun",
+      "wrist": "left",
+      "organ": "Heart",
+      "waveform_sample": [
+        0.128, 1.129, 0.289, 0.345, 0.363, 0.206, 0.163, 0.105, 0.1, 1.061,
+        0.404, 0.32, 0.409, 0.211, 0.171, 0.101, 0.088, 0.914, 0.507, 0.26,
+        0.422, 0.198, 0.167, 0.095, 0.083, 0.762, 0.65, 0.229, 0.452, 0.21
+      ],
+      "features": {
+        "heart_rate_bpm": 68,
+        "peak_amplitude": 1.201,
+        "mean_amplitude": 0.336,
+        "amplitude_range": 1.144,
+        "pulse_width_ratio": 0.32,
+        "dicrotic_notch": 0.34,
+        "rise_sharpness": 1.1,
+        "hrv_ms": 231.3,
+        "missed_beats": 1,
+        "irregularity": 0,
+        "beat_count": 12
+      }
+    },
+    "left_guan": {
+      "position": "guan",
+      "wrist": "left",
+      "organ": "Liver",
+      "waveform_sample": [
+        0.077, 0.411, 0.122, 0.111, 0.151, 0.122, 0.125, 0.099, 0.088, 0.093,
+        0.496, 0.102, 0.129, 0.149, 0.124, 0.12, 0.091, 0.082, 0.1, 0.473,
+        0.088, 0.133, 0.135, 0.121, 0.112, 0.087, 0.082, 0.14, 0.377, 0.092
+      ],
+      "features": {
+        "heart_rate_bpm": 68,
+        "peak_amplitude": 0.502,
+        "mean_amplitude": 0.145,
+        "amplitude_range": 0.43,
+        "pulse_width_ratio": 0.165,
+        "dicrotic_notch": 0.164,
+        "rise_sharpness": 0.81,
+        "hrv_ms": 2.6,
+        "missed_beats": 0,
+        "irregularity": 0,
+        "beat_count": 12
+      }
+    },
+    "left_chi": {
+      "position": "chi",
+      "wrist": "left",
+      "organ": "Kidney Yin",
+      "waveform_sample": [
+        0.084, 0.318, 0.103, 0.098, 0.124, 0.106, 0.109, 0.088, 0.077, 0.075,
+        0.335, 0.09, 0.095, 0.12, 0.104, 0.108, 0.089, 0.079, 0.079, 0.362,
+        0.09, 0.1, 0.122, 0.107, 0.109, 0.087, 0.078, 0.077, 0.378, 0.084
+      ],
+      "features": {
+        "heart_rate_bpm": 67,
+        "peak_amplitude": 0.409,
+        "mean_amplitude": 0.125,
+        "amplitude_range": 0.335,
+        "pulse_width_ratio": 0.125,
+        "dicrotic_notch": 0.132,
+        "rise_sharpness": 0.7,
+        "hrv_ms": 3,
+        "missed_beats": 0,
+        "irregularity": 0,
+        "beat_count": 12
+      }
+    },
+    "right_cun": {
+      "position": "cun",
+      "wrist": "right",
+      "organ": "Lung",
+      "waveform_sample": [
+        0.082, 0.412, 0.095, 0.119, 0.161, 0.124, 0.124, 0.095, 0.084, 0.085,
+        0.533, 0.089, 0.14, 0.152, 0.125, 0.116, 0.086, 0.078, 0.092, 0.379,
+        0.082, 0.146, 0.127, 0.116, 0.099, 0.075, 0.072, 0.172, 0.178, 0.095
+      ],
+      "features": {
+        "heart_rate_bpm": 68,
+        "peak_amplitude": 0.538,
+        "mean_amplitude": 0.143,
+        "amplitude_range": 0.467,
+        "pulse_width_ratio": 0.15,
+        "dicrotic_notch": 0.18,
+        "rise_sharpness": 0.9,
+        "hrv_ms": 3.8,
+        "missed_beats": 0,
+        "irregularity": 0,
+        "beat_count": 12
+      }
+    },
+    "right_guan": {
+      "position": "guan",
+      "wrist": "right",
+      "organ": "Spleen/Stomach",
+      "waveform_sample": [
+        0.195, 0.338, 0.296, 0.156, 0.124, 0.104, 0.105, 0.095, 0.08, 0.077,
+        0.259, 0.345, 0.226, 0.13, 0.116, 0.103, 0.106, 0.091, 0.082, 0.08,
+        0.311, 0.325, 0.183, 0.126, 0.11, 0.104, 0.101, 0.084, 0.078, 0.21
+      ],
+      "features": {
+        "heart_rate_bpm": 64,
+        "peak_amplitude": 0.358,
+        "mean_amplitude": 0.159,
+        "amplitude_range": 0.288,
+        "pulse_width_ratio": 0.225,
+        "dicrotic_notch": 0.132,
+        "rise_sharpness": 0.43,
+        "hrv_ms": 32.7,
+        "missed_beats": 0,
+        "irregularity": 0.06,
+        "beat_count": 11
+      }
+    },
+    "right_chi": {
+      "position": "chi",
+      "wrist": "right",
+      "organ": "Kidney Yang/Mingmen",
+      "waveform_sample": [
+        0.159, 0.363, 0.252, 0.113, 0.112, 0.103, 0.105, 0.084, 0.077, 0.218,
+        0.37, 0.183, 0.108, 0.105, 0.106, 0.1, 0.083, 0.081, 0.295, 0.341,
+        0.144, 0.119, 0.11, 0.116, 0.1, 0.087, 0.085, 0.358, 0.278, 0.12
+      ],
+      "features": {
+        "heart_rate_bpm": 69,
+        "peak_amplitude": 0.38,
+        "mean_amplitude": 0.156,
+        "amplitude_range": 0.306,
+        "pulse_width_ratio": 0.28,
+        "dicrotic_notch": 0.11,
+        "rise_sharpness": 0.64,
+        "hrv_ms": 7.1,
+        "missed_beats": 0,
+        "irregularity": 0,
+        "beat_count": 12
+      }
+    }
+  },
+  "healthy_baseline": {
+    "left_cun": {
+      "heart_rate_bpm": 68,
+      "peak_amplitude": 1.201,
+      "mean_amplitude": 0.336,
+      "amplitude_range": 1.144,
+      "pulse_width_ratio": 0.32,
+      "dicrotic_notch": 0.34,
+      "rise_sharpness": 1.1,
+      "hrv_ms": 231.3,
+      "missed_beats": 1,
+      "irregularity": 0,
+      "beat_count": 12
+    },
+    "left_guan": {
+      "heart_rate_bpm": 72,
+      "peak_amplitude": 1.018,
+      "mean_amplitude": 0.327,
+      "amplitude_range": 0.957,
+      "pulse_width_ratio": 0.38,
+      "dicrotic_notch": 0.26,
+      "rise_sharpness": 0.9,
+      "hrv_ms": 7.7,
+      "missed_beats": 0,
+      "irregularity": 0,
+      "beat_count": 12
+    },
+    "left_chi": {
+      "heart_rate_bpm": 70,
+      "peak_amplitude": 0.811,
+      "mean_amplitude": 0.257,
+      "amplitude_range": 0.745,
+      "pulse_width_ratio": 0.3,
+      "dicrotic_notch": 0.18,
+      "rise_sharpness": 0.78,
+      "hrv_ms": 8.1,
+      "missed_beats": 0,
+      "irregularity": 0,
+      "beat_count": 12
+    },
+    "right_cun": {
+      "heart_rate_bpm": 73,
+      "peak_amplitude": 1.099,
+      "mean_amplitude": 0.331,
+      "amplitude_range": 1.04,
+      "pulse_width_ratio": 0.35,
+      "dicrotic_notch": 0.3,
+      "rise_sharpness": 1,
+      "hrv_ms": 6,
+      "missed_beats": 0,
+      "irregularity": 0,
+      "beat_count": 13
+    },
+    "right_guan": {
+      "heart_rate_bpm": 70,
+      "peak_amplitude": 1.056,
+      "mean_amplitude": 0.394,
+      "amplitude_range": 0.996,
+      "pulse_width_ratio": 0.4,
+      "dicrotic_notch": 0.44,
+      "rise_sharpness": 0.85,
+      "hrv_ms": 8.8,
+      "missed_beats": 0,
+      "irregularity": 0,
+      "beat_count": 12
+    },
+    "right_chi": {
+      "heart_rate_bpm": 70,
+      "peak_amplitude": 0.835,
+      "mean_amplitude": 0.266,
+      "amplitude_range": 0.77,
+      "pulse_width_ratio": 0.31,
+      "dicrotic_notch": 0.2,
+      "rise_sharpness": 0.8,
+      "hrv_ms": 8.1,
+      "missed_beats": 0,
+      "irregularity": 0,
+      "beat_count": 12
+    }
+  }
+}
