@@ -131,15 +131,26 @@ export function HealthTrendSnippet({ analysisData }: { analysisData?: any }) {
     "Right kidney": { color: "#3f48cc", trackColor: "#d5d7f8" },
   }
 
+  const labelMap: Record<string, string> = {
+    heart: "Heart",
+    lung: "Lungs",
+    liver: "Liver",
+    spleen: "Spleen",
+    kidney_yin: "Left kidney",
+    kidney_yang: "Right kidney",
+  }
+
   const dynamicOrgans: OrganScore[] = analysisData?.organ_scores
-    ? Object.entries(analysisData.organ_scores).map(([name, score]) => {
-        const colors = colorMap[name as string] || { color: "#46913c", trackColor: "#acd8a7" };
+    ? Object.entries(analysisData.organ_scores).map(([rawName, score]) => {
+        const displayName =
+          labelMap[rawName] || rawName.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+        const colors = colorMap[displayName] || { color: "#46913c", trackColor: "#acd8a7" }
         return {
-          name,
+          name: displayName,
           score: score as number,
           color: colors.color,
           trackColor: colors.trackColor,
-          icon: <span className="text-xs">{name[0]}</span>,
+          icon: <span className="text-xs">{displayName[0]}</span>,
         }
       })
     : []

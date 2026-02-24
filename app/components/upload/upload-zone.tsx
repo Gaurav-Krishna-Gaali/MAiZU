@@ -19,18 +19,49 @@ export function UploadZone({ onResult, showRaw = false }: UploadZoneProps) {
   const normalizeApiResponse = (resp: any) => {
     if (!resp) return resp
 
-    // Handle Anthropic-style response where the real JSON is nested
-    // inside content[0].text as a string.
-    const content0 = resp.content?.[0]
-    const text = typeof content0?.text === "string" ? content0.text : null
-
-    if (text) {
-      try {
-        const inner = JSON.parse(text)
-        return inner
-      } catch (e) {
-        console.warn("Failed to parse nested analysis JSON", e)
+    const parseMaybeFencedJson = (raw: string) => {
+      const trimmed = raw.trim()
+      if (trimmed.startsWith("```")) {
+        const match = trimmed.match(/```[a-zA-Z]*\n([\s\S]*?)```/)
+        if (match && match[1]) {
+          try {
+            return JSON.parse(match[1])
+          } catch (e) {
+            console.warn("Failed to parse fenced JSON payload", e)
+          }
+        }
       }
+      try {
+        return JSON.parse(trimmed)
+      } catch (e) {
+        console.warn("Failed to parse JSON payload", e)
+        return null
+      }
+    }
+
+    const tryParseInner = (node: any) => {
+      if (!node) return null
+      const text = typeof node.content?.[0]?.text === "string" ? node.content[0].text : null
+      if (!text) return null
+      return parseMaybeFencedJson(text)
+    }
+
+    // 1) Direct Anthropic-style message
+    const direct = tryParseInner(resp)
+    if (direct) return direct
+
+    // 2) Wrapped in result / data
+    const fromResult = tryParseInner(resp.result)
+    if (fromResult) return fromResult
+    const fromData = tryParseInner(resp.data)
+    if (fromData) return fromData
+
+    // 3) Flatten result/data if they already look like the final object
+    if (resp.result && (resp.result.diagnosis || resp.result.organ_scores)) {
+      return resp.result
+    }
+    if (resp.data && (resp.data.diagnosis || resp.data.organ_scores)) {
+      return resp.data
     }
 
     return resp

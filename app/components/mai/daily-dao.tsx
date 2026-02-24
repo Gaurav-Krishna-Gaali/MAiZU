@@ -46,20 +46,72 @@ export function DailyDao({ analysisData }: { analysisData?: any }) {
   const tabContent = analysisData
     ? {
         Focus: {
-          text: analysisData.diagnosis?.primary?.pattern
-            ? `Pattern: ${analysisData.diagnosis.primary.pattern}`
-            : defaultContent.Focus.text,
+          text: (() => {
+            const primary = analysisData.diagnosis?.primary
+            if (!primary?.pattern) return defaultContent.Focus.text
+
+            const parts: string[] = []
+            parts.push(primary.pattern)
+            if (primary.romanized) {
+              parts.push(`(${primary.romanized})`)
+            }
+            if (typeof primary.confidence_pct === "number") {
+              parts.push(`— ${primary.confidence_pct}% confidence`)
+            }
+
+            const detailBits: string[] = []
+            if (primary.key_positions?.length) {
+              detailBits.push(`positions: ${primary.key_positions.join(", ")}`)
+            }
+            if (primary.key_qualities?.length) {
+              detailBits.push(`qualities: ${primary.key_qualities.join(", ")}`)
+            }
+
+            const details = detailBits.length ? ` Key ${detailBits.join(" · ")}.` : ""
+
+            return `Primary pattern: ${parts.join(" ")}.${details}`
+          })(),
           iconBg: defaultContent.Focus.iconBg,
           iconSvg: defaultContent.Focus.iconSvg,
         },
         Enlighten: {
-          text: analysisData.recommendations?.lifestyle || defaultContent.Enlighten.text,
+          text: (() => {
+            const recs = analysisData.recommendations
+            if (!recs) return defaultContent.Enlighten.text
+
+            const bits: string[] = []
+            if (recs.acupressure_points?.length) {
+              bits.push(
+                `Acupressure focus: ${recs.acupressure_points.join(", ")}.`
+              )
+            }
+            if (recs.lifestyle) {
+              bits.push(recs.lifestyle)
+            }
+
+            return bits.join(" ") || defaultContent.Enlighten.text
+          })(),
           iconBg: defaultContent.Enlighten.iconBg,
           iconSvg: defaultContent.Enlighten.iconSvg,
         },
         Thrive: {
-          text:
-            analysisData.recommendations?.follow_up || defaultContent.Thrive.text,
+          text: (() => {
+            const recs = analysisData.recommendations
+            const follow = recs?.follow_up
+            const lifestyle = recs?.lifestyle
+
+            if (!follow && !lifestyle) return defaultContent.Thrive.text
+
+            const parts: string[] = []
+            if (follow) {
+              parts.push(follow)
+            }
+            if (lifestyle && !follow) {
+              parts.push(lifestyle)
+            }
+
+            return parts.join(" ")
+          })(),
           iconBg: defaultContent.Thrive.iconBg,
           iconSvg: defaultContent.Thrive.iconSvg,
         },
@@ -95,7 +147,7 @@ export function DailyDao({ analysisData }: { analysisData?: any }) {
           {content.text}
         </p>
         <div
-          className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg"
+          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg"
           style={{ backgroundColor: content.iconBg }}
         >
           {content.iconSvg}

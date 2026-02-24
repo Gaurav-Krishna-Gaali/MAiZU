@@ -11,6 +11,7 @@ import { DailyBalanceOverview } from "@/components/mai/daily-balance-overview"
 import { VitalPatterns } from "@/components/mai/vital-patterns"
 import { MenstruationCalendar } from "@/components/mai/menstruation-calendar"
 import { BottomNav } from "@/components/mai/bottom-nav"
+import { InsightCard } from "@/components/mai/insight-card"
 import { UploadZone } from "@/components/upload/upload-zone"
 import { AnalysisSummary } from "@/components/upload/analysis-summary"
 
@@ -71,9 +72,10 @@ export default function MaiSyncApp() {
             <PulseInterpretation analysisData={analysisData} />
           </div>
 
-          {/* Daily Dao */}
-          <div className="mt-0">
+          {/* Daily Dao + textual insight */}
+          <div className="mt-0 space-y-4">
             <DailyDao analysisData={analysisData} />
+            <InsightCard analysisData={analysisData} />
           </div>
 
           {/* Health Trend + Balance side by side on desktop */}

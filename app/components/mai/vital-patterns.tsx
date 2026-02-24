@@ -169,11 +169,30 @@ export function VitalPatterns({ analysisData }: { analysisData?: any }) {
               className="flex flex-col rounded-2xl border border-[#e1e3e8] bg-[#ffffff] p-4"
             >
               <span className="text-sm font-semibold text-[#276220]">
-                {pos.replace(/_/g, ' ')}
+                {pos.replace(/_/g, " ")}
               </span>
               <span className="mt-1 text-xs text-[#676767]">
                 {info.dominant_quality} ({info.category})
               </span>
+              {info.six_categories && (
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {info.six_categories.strength && (
+                    <span className="rounded-full bg-[#e4f3ea] px-2 py-0.5 text-[10px] text-[#276220]">
+                      Strength: {info.six_categories.strength}
+                    </span>
+                  )}
+                  {info.six_categories.depth && (
+                    <span className="rounded-full bg-[#e4f3ea] px-2 py-0.5 text-[10px] text-[#276220]">
+                      Depth: {info.six_categories.depth}
+                    </span>
+                  )}
+                  {info.six_categories.shape && (
+                    <span className="rounded-full bg-[#e4f3ea] px-2 py-0.5 text-[10px] text-[#276220]">
+                      Shape: {info.six_categories.shape}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
